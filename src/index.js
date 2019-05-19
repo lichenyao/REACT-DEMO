@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
-import { BrowserRouter, Route, Link } from 'react-router-dom'
+import { BrowserRouter, Route, Link, Switch } from 'react-router-dom'
 
 import App from './App'
 import { counter, addGun, removeGun, addGunAsync } from './index.redux';
@@ -14,11 +14,23 @@ const store = createStore(counter, applyMiddleware(thunk))
 //     document.getElementById('root')
 // )
 function ErYing() {
-    return <h2>二营  001</h2>
+    return <h2>二营</h2>
 }
 function QiBingLian() {
-    return <h2>骑兵连  001</h2>
+    return <h2>骑兵连</h2>
 }
+class Test extends React.Component {
+    // constructor(props){
+    //     super(props)
+    // }
+    render() {
+        console.log(this.props);
+        return (
+            <h2>测试组建 {this.props.match.params.location_test}</h2>
+        )
+    }
+}
+
 const arr = [{ value: '一营', link: '/' }, { value: '二营', link: '/erying' }, { value: '骑兵连', link: '/qibinglian' }]
 function render() {
     ReactDOM.render(
@@ -26,18 +38,20 @@ function render() {
             <BrowserRouter>
                 <ul>
                     {arr.map(v => {
-                        return <li>
+                        return <li key={v.value + Date.now()}>
                             <Link to={v.link}>{v.value}</Link>
                         </li>
                     })}
                 </ul>
                 {/* exact 完全匹配匹配 */}
-                <Route path='/' exact component={App}>
-                </Route>
-                <Route path='/erying' component={ErYing}>
-                </Route>
-                <Route path='/qibinglian' component={QiBingLian}>
-                </Route>
+                <Switch>
+                    {/* 只渲染命中的第一个Route */}
+                    <Route path='/' exact component={App}></Route>
+                    <Route path='/erying' component={ErYing}></Route>
+                    <Route path='/qibinglian' component={QiBingLian}></Route>
+                    <Route path='/:location_test' component={Test}></Route>
+                </Switch>
+
                 {/* <App></App> */}
             </BrowserRouter>
         </Provider>,

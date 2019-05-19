@@ -9,9 +9,9 @@ import { addGun, removeGun, addGunAsync } from './index.redux';
     { addGun, removeGun, addGunAsync }
 )
 class App extends React.Component {
-    constructor(props) {
-        super(props)
-    }
+    // constructor(props) {
+    //     super(props)
+    // }
 
     render() {
         // const store = this.props.store
