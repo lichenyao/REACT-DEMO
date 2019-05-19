@@ -129,6 +129,14 @@
   "babel": {
     "presets": [
       "react-app"
+    ],
+    "plugins": [
+      ["@babel/plugin-proposal-decorators", { "legacy": true }],
+      ["@babel/plugin-proposal-class-properties", { "loose" : true }]
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-decorators": "^7.4.4",
+    "babel-plugin-transform-decorators-legacy": "^1.3.5"
   }
 }
