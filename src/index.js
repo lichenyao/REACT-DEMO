@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom'
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
+import { BrowserRouter, Route, Link } from 'react-router-dom'
+
 import App from './App'
 import { counter, addGun, removeGun, addGunAsync } from './index.redux';
 
@@ -11,11 +13,33 @@ const store = createStore(counter, applyMiddleware(thunk))
 //     <App></App>,
 //     document.getElementById('root')
 // )
-
+function ErYing() {
+    return <h2>二营  001</h2>
+}
+function QiBingLian() {
+    return <h2>骑兵连  001</h2>
+}
+const arr = [{ value: '一营', link: '/' }, { value: '二营', link: '/erying' }, { value: '骑兵连', link: '/qibinglian' }]
 function render() {
     ReactDOM.render(
         <Provider store={store}>
-            <App></App>
+            <BrowserRouter>
+                <ul>
+                    {arr.map(v => {
+                        return <li>
+                            <Link to={v.link}>{v.value}</Link>
+                        </li>
+                    })}
+                </ul>
+                {/* exact 完全匹配匹配 */}
+                <Route path='/' exact component={App}>
+                </Route>
+                <Route path='/erying' component={ErYing}>
+                </Route>
+                <Route path='/qibinglian' component={QiBingLian}>
+                </Route>
+                {/* <App></App> */}
+            </BrowserRouter>
         </Provider>,
         // <App store={store} addGun={addGun} removeGun={removeGun} addGunAsync={addGunAsync}></App>,
         document.getElementById('root')
