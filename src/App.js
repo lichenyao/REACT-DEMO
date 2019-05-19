@@ -1,26 +1,36 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import {createStore} from 'redux'
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { connect } from 'react-redux'
+import { addGun, removeGun, addGunAsync } from './index.redux';
+
+class App extends React.Component {
+    constructor(props) {
+        super(props)
+    }
+
+    render() {
+        const store = this.props.store
+        // const num = store.getState()
+        const num = this.props.num
+        const addGun = this.props.addGun
+        const removeGun = this.props.removeGun
+        const addGunAsync = this.props.addGunAsync
+        return (
+            <div>
+                <h2>现在有机枪{num}把</h2>
+                <button onClick={addGun}>申请武器</button>
+                <button onClick={removeGun}>上缴武器</button>
+                <button onClick={addGunAsync}>上缴武器</button>
+            </div>
+        )
+    }
 }
 
-export default App;
+const mapStatetoProps = (state) => {
+    return { num: state }
+}
+
+const actionCreators = { addGun, removeGun, addGunAsync }
+
+App = connect(mapStatetoProps, actionCreators)(App)
+
+export default App
